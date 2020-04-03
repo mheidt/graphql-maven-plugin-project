@@ -9,7 +9,7 @@ directive @testDirective(
   aFloat: Float
   aBoolean: Boolean
   anID: ID
-  #anEnum: Episode = JEDI # not supported by graphql-java v14.0 on server side. It works Ok on client side
+  anEnum: Episode = JEDI # not supported by graphql-java v14.0 on server side. It works Ok on client side
   aCustomScalarDate: Date = "2000-12-31"
 ) on
 # ExecutableDirectiveLocation
@@ -89,7 +89,7 @@ enum Episode @testDirective(
 		aFloat: 666.666, 
 		aBoolean: true, 
 		anID: "00000000-0000-0000-0000-000000000002", 
-		#anEnum: NEWHOPE, 
+		anEnum: NEWHOPE, 
 		aCustomScalarDate: "2001-02-28") {
     NEWHOPE
     EMPIRE @anotherTestDirective
@@ -163,7 +163,7 @@ enum Unit {
 # Both should contains all possible combinations of parameters, data type, list, mandatory field or items...
 type AllFieldCases implements WithID @testDirective(value:"on Object") @anotherTestDirective {
     id: ID! @testDirective(value:"on Field")
-    name: String!
+    name: String! @relation(name: "an id's relation", direction: OUT)
     forname(uppercase: Boolean @testDirective(value:"on Argument"), textToAppendToTheForname: String): String
     age(unit: Unit = YEAR) : Long!   @deprecated(reason: "This is a test")
     date: Date
@@ -288,16 +288,16 @@ type break {
 #
 # But removed from this GraphQL schema as enum values in Directives are not supported by graphql-java v14.0 on server side
 # It works Ok on client side
-#
-#directive @relation(
-#    name: String
-#    direction: direction
-#) on FIELD_DEFINITION
-#
-#enum direction {
-#    IN
-#    OUT
-#}
+
+directive @relation(
+    name: String
+    direction: direction
+) on FIELD_DEFINITION
+
+enum direction {
+    IN
+    OUT
+}
 #############################
 
 #############################
