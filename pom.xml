@@ -320,7 +320,7 @@
 			<dependency>
 				<groupId>com.graphql-java</groupId>
 				<artifactId>graphql-java</artifactId>
-				<version>SNAPSHOT</version>
+				<version>2020-04-06T09-18-22-c98ebf75</version>
 			</dependency>
 			<dependency>
 				<groupId>com.graphql-java</groupId>
